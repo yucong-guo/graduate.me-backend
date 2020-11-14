@@ -20,8 +20,8 @@ User.create = (newUser, result) => {
   });
 };
 
-User.findById = (userId, result) => {
-  sql.query(`SELECT * FROM Users WHERE id = ${userId}`, (err, res) => {
+User.findById = (username, result) => {
+  sql.query(`SELECT * FROM Users WHERE username = ${username}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -54,7 +54,7 @@ User.getAll = result => {
 
 User.updateById = (id, user, result) => {
   sql.query(
-    "UPDATE Users SET email = ?, username = ?, password = ? WHERE id = ?",
+    "UPDATE Users SET email = ?, username = ?, password = ? WHERE username = ?",
     [user.email, user.username, user.password, id],
     (err, res) => {
       if (err) {
@@ -76,7 +76,7 @@ User.updateById = (id, user, result) => {
 };
 
 User.remove = (id, result) => {
-  sql.query("DELETE FROM Users WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM Users WHERE username = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -89,7 +89,7 @@ User.remove = (id, result) => {
       return;
     }
 
-    console.log("deleted User with id: ", id);
+    console.log("deleted User with username: ", id);
     result(null, res);
   });
 };
